@@ -1,0 +1,1 @@
+.\PerfInsights.ps1 -AcceptDisclaimerAndShareDiagnostics -NoSRNumber -Scenario benchmark
