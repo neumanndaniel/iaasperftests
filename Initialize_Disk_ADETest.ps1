@@ -1,30 +1,30 @@
-﻿$Disks=Get-Disk|Where-Object{$_.PartitionStyle -eq 'RAW'}
+$Disks=Get-Disk|Where-Object{$_.PartitionStyle -eq 'RAW'}
 foreach($Disk in $Disks){
     Initialize-Disk -UniqueId $Disk.UniqueId -PartitionStyle GPT
     $Partition=New-Partition -DiskId $Disk.UniqueId -UseMaximumSize -AssignDriveLetter
     $Volume=Get-Volume -DriveLetter $Partition.DriveLetter
-    if($Disk.Size/1GB -eq 32){
+    if($Disk.Size/1GB -le 32){
         Format-Volume -ObjectId $Volume.ObjectId -FileSystem NTFS -AllocationUnitSize 64KB -NewFileSystemLabel "4" -Force -Confirm:$false
     }
-    if($Disk.Size/1GB -eq 64){
+    if($Disk.Size/1GB -le 64 -and $Disk.Size/1GB -gt 32){
         Format-Volume -ObjectId $Volume.ObjectId -FileSystem NTFS -AllocationUnitSize 64KB -NewFileSystemLabel "6" -Force -Confirm:$false
     }
-    if($Disk.Size/1GB -eq 128){
+    if($Disk.Size/1GB -le 128 -and $Disk.Size/1GB -gt 64){
         Format-Volume -ObjectId $Volume.ObjectId -FileSystem NTFS -AllocationUnitSize 64KB -NewFileSystemLabel "10" -Force -Confirm:$false
     }
-    if($Disk.Size/1GB -eq 256){
+    if($Disk.Size/1GB -le 256 -and $Disk.Size/1GB -gt 128){
         Format-Volume -ObjectId $Volume.ObjectId -FileSystem NTFS -AllocationUnitSize 64KB -NewFileSystemLabel "15" -Force -Confirm:$false
     }
-    if($Disk.Size/1GB -eq 512){
+    if($Disk.Size/1GB -le 512 -and $Disk.Size/1GB -gt 256){
         Format-Volume -ObjectId $Volume.ObjectId -FileSystem NTFS -AllocationUnitSize 64KB -NewFileSystemLabel "20" -Force -Confirm:$false
     }
-    if($Disk.Size/1GB -eq 1024){
+    if($Disk.Size/1GB -le 1024 -and $Disk.Size/1GB -gt 512){
         Format-Volume -ObjectId $Volume.ObjectId -FileSystem NTFS -AllocationUnitSize 64KB -NewFileSystemLabel "30" -Force -Confirm:$false
     }
-    if($Disk.Size/1GB -eq 2048){
+    if($Disk.Size/1GB -le 2048 -and $Disk.Size/1GB -gt 1024){
         Format-Volume -ObjectId $Volume.ObjectId -FileSystem NTFS -AllocationUnitSize 64KB -NewFileSystemLabel "40" -Force -Confirm:$false
     }
-    if($Disk.Size/1GB -eq 4095){
+    if($Disk.Size/1GB -le 4095 -and $Disk.Size/1GB -gt 2048){
         Format-Volume -ObjectId $Volume.ObjectId -FileSystem NTFS -AllocationUnitSize 64KB -NewFileSystemLabel "50" -Force -Confirm:$false
     }
 }
