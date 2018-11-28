@@ -1,1 +1,1 @@
-.\PerfInsights.ps1 -AcceptDisclaimerAndShareDiagnostics -NoSRNumber -Scenario benchmark
+.\PerfInsights.exe /run benchmark /AcceptDisclaimerAndShareDiagnostics /sau
