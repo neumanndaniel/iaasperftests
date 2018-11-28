@@ -32,4 +32,4 @@ New-Item -Path C:\ -Name 'IaaS' -ItemType Directory -Verbose
 Invoke-WebRequest -Uri "https://download.microsoft.com/download/1/0/F/10F6E64A-680F-4B9D-9B74-F6511155B6A9/PerfInsights.zip" -OutFile C:\IaaS\PerfInsights.zip -Verbose
 Expand-Archive -Path C:\IaaS\PerfInsights.zip -DestinationPath C:\IaaS -Force -Verbose
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/neumanndaniel/iaasperftests/master/Start.ps1" -OutFile C:\IaaS\Start.ps1 -Verbose
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/neumanndaniel/iaasperftests/master/PerfInsights_Settings.xml" -OutFile C:\IaaS\PerfInsights_Settings.xml -Verbose
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/neumanndaniel/iaasperftests/master/RuleEngineConfig.json" -OutFile C:\IaaS\RuleEngineConfig.json -Verbose
