@@ -1,0 +1,1324 @@
+{
+  "ResourceMonitorIntervalMS": 5000,
+  "PerformanceCounterMonitorIntervalMS": 5000,
+  "Version": "1.0",
+  "StoragePerformanceLimits": [
+    {
+      "StorageTier": "Basic",
+      "PremiumDiskType": null,
+      "MaxDiskSizeGB": null,
+      "IOPS": 300,
+      "ThroughputMBPS": 60
+    },
+    {
+      "StorageTier": "Standard",
+      "PremiumDiskType": null,
+      "MaxDiskSizeGB": null,
+      "IOPS": 500,
+      "ThroughputMBPS": 60
+    },
+    {
+      "StorageTier": "Premium",
+      "PremiumDiskType": "P4",
+      "MaxDiskSizeGB": 32,
+      "IOPS": 120,
+      "ThroughputMBPS": 25
+    },
+    {
+      "StorageTier": "Premium",
+      "PremiumDiskType": "P6",
+      "MaxDiskSizeGB": 64,
+      "IOPS": 240,
+      "ThroughputMBPS": 50
+    },
+    {
+      "StorageTier": "Premium",
+      "PremiumDiskType": "P10",
+      "MaxDiskSizeGB": 128,
+      "IOPS": 500,
+      "ThroughputMBPS": 100
+    },
+    {
+      "StorageTier": "Premium",
+      "PremiumDiskType": "P15",
+      "MaxDiskSizeGB": 256,
+      "IOPS": 1100,
+      "ThroughputMBPS": 125
+    },
+    {
+      "StorageTier": "Premium",
+      "PremiumDiskType": "P20",
+      "MaxDiskSizeGB": 512,
+      "IOPS": 2300,
+      "ThroughputMBPS": 150
+    },
+    {
+      "StorageTier": "Premium",
+      "PremiumDiskType": "P30",
+      "MaxDiskSizeGB": 1024,
+      "IOPS": 5000,
+      "ThroughputMBPS": 200
+    },
+    {
+      "StorageTier": "Premium",
+      "PremiumDiskType": "P40/P50",
+      "MaxDiskSizeGB": 2048,
+      "IOPS": 7500,
+      "ThroughputMBPS": 250
+    },
+    {
+      "StorageTier": "Premium",
+      "PremiumDiskType": "P60",
+      "MaxDiskSizeGB": 8192,
+      "IOPS": 12500,
+      "ThroughputMBPS": 480
+    },
+    {
+      "StorageTier": "Premium",
+      "PremiumDiskType": "P70",
+      "MaxDiskSizeGB": 16384,
+      "IOPS": 15000,
+      "ThroughputMBPS": 750
+    },
+    {
+      "StorageTier": "Premium",
+      "PremiumDiskType": "P80",
+      "MaxDiskSizeGB": 4294967295,
+      "IOPS": 20000,
+      "ThroughputMBPS": 750
+    }
+  ],
+  "OutputFolderPath": ".\\Output",
+  "RuleConfigurations": [
+    {
+      "$type": "Microsoft.Azure.Performance.Diagnostics.Contracts.HighCpuRuleConfiguration, Microsoft.Azure.Performance.Diagnostics",
+      "Name": "HighCpuRule",
+      "FriendlyName": "High CPU usage",
+      "Enabled": true,
+      "Category": "CPU",
+      "CpuPercentageLongSpinner": 5,
+      "CpuPercentageThresholdAllCore": 30,
+      "CpuPercentageThresholdAnyCore": 80,
+      "LongSpinnerTimeoutMS": 60000,
+      "AvgCpuPercentageLongSpinner": 20,
+      "FindingTemplates": [
+        {
+          "Id": 0,
+          "FindingTemplate": "High CPU usage periods were detected. DPC/ISR were the key contributors during these high CPU usage periods.",
+          "RecommendationTemplate": "If the high CPU behavior is unexpected, collect an ETW trace to analyze and narrow down the DPC/ISR routines causing high CPU usage.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "ISRs and DPCs, The Silent Killers",
+              "Link": "https://blogs.msdn.microsoft.com/pigscanfly/2006/10/09/isrs-and-dpcs-the-silent-killers/"
+            },
+            {
+              "Title": "Event Tracing",
+              "Link": "https://msdn.microsoft.com/en-us/library/windows/desktop/bb968803(v=vs.85).aspx"
+            },
+            {
+              "Title": "CPU Analysis - DPC/ISR Graph",
+              "Link": "https://docs.microsoft.com/en-us/windows-hardware/test/wpt/cpu-analysis#dpcisr-graph"
+            },
+            {
+              "Title": "WPT - CPU Analysis",
+              "Link": "https://channel9.msdn.com/Shows/Defrag-Tools/Defrag-Tools-42-WPT-CPU-Analysis"
+            }
+          ]
+        },
+        {
+          "Id": 1,
+          "FindingTemplate": "High CPU usage periods were detected. IIS (w3wp.exe) was the key contributor during these high CPU usage periods.",
+          "RecommendationTemplate": "If the high CPU behavior is unexpected, review the High CPU consumer data in the report (download the full report if the finding is being reviewed in Azure portal) and follow the instructions from the reference link(s) to troubleshoot the issue further.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "Troubleshooting High CPU in an IIS Application Pool",
+              "Link": "https://docs.microsoft.com/en-us/iis/troubleshoot/performance-issues/troubleshooting-high-cpu-in-an-iis-7x-application-pool"
+            }
+          ]
+        },
+        {
+          "Id": 2,
+          "FindingTemplate": "High CPU usage periods were detected. SQL Server was the key contributor during these high CPU usage periods.",
+          "RecommendationTemplate": "If the high CPU behavior is unexpected, review the High CPU consumer data in the report (download the full report if the finding is being reviewed in Azure portal) and follow the instructions from the reference link(s) to troubleshoot the issue further.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "SQL High CPU troubleshooting checklist",
+              "Link": "https://blogs.msdn.microsoft.com/docast/2017/07/30/sql-high-cpu-troubleshooting-checklist/"
+            }
+          ]
+        },
+        {
+          "Id": 3,
+          "FindingTemplate": "High CPU usage periods were detected. One or more Third-Party processes were the key contributors during these high CPU usage periods.",
+          "RecommendationTemplate": "If the high CPU behavior is unexpected, review the High CPU consumer data in the report (download the full report if the finding is being reviewed in Azure portal) and follow the instructions from the reference link(s) or contact the Third-Party vendor to troubleshoot the issue further.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "CPU Analysis",
+              "Link": "https://docs.microsoft.com/en-us/windows-hardware/test/wpt/cpu-analysis"
+            },
+            {
+              "Title": "WPT - CPU Analysis",
+              "Link": "https://channel9.msdn.com/Shows/Defrag-Tools/Defrag-Tools-42-WPT-CPU-Analysis"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$type": "Microsoft.Azure.Performance.Diagnostics.Contracts.HighDiskRuleConfiguration, Microsoft.Azure.Performance.Diagnostics",
+      "Name": "HighDiskRule",
+      "FriendlyName": "High disk usage",
+      "Enabled": true,
+      "Category": "Storage",
+      "PhysicalDiskPercentageThresholdAnyDisk": 90,
+      "PhysicalDiskIopsThresholdAnyDisk": 500,
+      "PhysicalDiskThroughputKbpsThresholdAnyDisk": 100000,
+      "DiskIopsPerProcessLongSpinner": 50,
+      "LongSpinnerTimeoutMS": 60000
+    },
+    {
+      "$type": "Microsoft.Azure.Performance.Diagnostics.Contracts.HighResolutionDiskRuleConfiguration, Microsoft.Azure.Performance.Diagnostics",
+      "Name": "HighResolutionDiskRule",
+      "FriendlyName": "High resolution disk usage",
+      "Enabled": true,
+      "Category": "Storage",
+      "DetectWindowMS": 50,
+      "AnalysisTimerIntervalMS": 5000,
+      "MaxDataPoints": 20000,
+      "DetectWindowConfiguration": {
+        "StandardVM": 200,
+        "PremiumVM": 50
+      },
+      "HighIoLatencyPeriodThreshold": {
+        "MinAvgIoSize": 65536,
+        "MinIoCount": 24,
+        "MinThroughputKB": 4500,
+        "MinThrottlePeriodSec": 5
+      },
+      "FindingTemplates": [
+        {
+          "Id": 0,
+          "FindingTemplate": "High disk IO latency periods were detected. During those periods, the 50th percentile disk IO latency was greater than {50PercentileIoLatencyThresholdMS} milliseconds. The processes issuing IOs during those periods might be impacted.",
+          "RecommendationTemplate": "Use Top Disk Consumers and High Resolution Disk Usage tabs to review the disk workloads. If the disk workloads of these processes are expected, consider optimizing application and disk performance.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "Optimizing Disk Performance",
+              "Link": "https://docs.microsoft.com/en-us/azure/virtual-machines/windows/premium-storage-performance#optimizing-application-performance"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$type": "Microsoft.Azure.Performance.Diagnostics.Contracts.HighMemoryRuleConfiguration, Microsoft.Azure.Performance.Diagnostics",
+      "Name": "HighMemoryRule",
+      "FriendlyName": "High memory usage",
+      "Enabled": true,
+      "Category": "Memory",
+      "AvailablePhysicalMemoryPercentageThreshold": 10,
+      "CommitInUsePercentageThreshold": 90,
+      "WorkingSetPercentageLongSpinner": 3,
+      "LongSpinnerTimeoutMS": 60000,
+      "TopSpinnersToReport": 10,
+      "FindingTemplates": [
+        {
+          "Id": 0,
+          "FindingTemplate": "High memory usage periods were detected. IIS (w3wp.exe) was the key contributor during these high memory usage periods.",
+          "RecommendationTemplate": "If the high memory behavior is unexpected, review the High Memory consumer data in the report (download the full report if the finding is being reviewed in Azure portal) and follow the instructions from the reference link(s) to troubleshoot the issue further.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "Quick things to check when you experience high memory levels in ASP.NET",
+              "Link": "https://support.microsoft.com/en-us/help/893660/quick-things-to-check-when-you-experience-high-memory-levels-in-asp-ne"
+            },
+            {
+              "Title": "How to use the IIS Debug Diagnostics tool to troubleshoot a memory leak in an IIS process",
+              "Link": "https://support.microsoft.com/en-sg/help/919790/how-to-use-the-iis-debug-diagnostics-tool-to-troubleshoot-a-memory-lea"
+            },
+            {
+              "Title": "Troubleshooting native memory leak in an IIS 7.x Application Pool",
+              "Link": "https://docs.microsoft.com/en-us/iis/troubleshoot/performance-issues/troubleshooting-native-memory-leak-in-an-iis-7x-application-pool"
+            }
+          ]
+        },
+        {
+          "Id": 1,
+          "FindingTemplate": "High memory usage periods were detected. One or more Third-Party processes were the key contributors during these high memory usage periods.",
+          "RecommendationTemplate": "If the high memory behavior is unexpected, review the High Memory consumer data in the report (download the full report if the finding is being reviewed in Azure portal) and follow the instructions from the reference link(s) or contact the Third-Party vendor to troubleshoot the issue further.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "Identify Processes with Large Working Sets",
+              "Link": "https://docs.microsoft.com/en-us/windows-hardware/test/wpt/memory-footprint-optimization-exercise-1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$type": "Microsoft.Azure.Performance.Diagnostics.Contracts.RuleConfiguration, Microsoft.Azure.Performance.Diagnostics",
+      "Name": "KnowledgeBaseCheckRule",
+      "FriendlyName": "Knowledge base analysis",
+      "Enabled": true,
+      "Category": "Windows",
+      "FindingTemplates": [
+        {
+          "Id": 0,
+          "FindingTemplate": "We noticed that update KB 3063075 is not installed. Without this patch, when you run a Windows Server 2012 R2 VM in Windows Azure, the event log may record many event ID 129 events. Event 129 is logged when I/O requests are dropped due to time-out issues.",
+          "RecommendationTemplate": "Install update KB 3063075 to mitigate the issue.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "Many ID 129 events are logged when you run a Windows Server 2012 R2 virtual machine in Windows Azure",
+              "Link": "https://support.microsoft.com/en-us/kb/3063075"
+            }
+          ]
+        },
+        {
+          "Id": 1,
+          "FindingTemplate": "We noticed that update KB 3033930 is not installed. After a process allocates approximately 65,535 RIO buffers, additional allocations that use RIORegisterBuffer fail with the \"WSAETOOMANYREFS\" error code. To avoid this situation, an internal limit on RIO buffers per process is increased.",
+          "RecommendationTemplate": "Install update KB 3033930 to mitigate the issue.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "Hotfix increases the 64K limit on RIO buffers per process for Azure service in Windows",
+              "Link": "https://support.microsoft.com/en-us/kb/3033930"
+            }
+          ]
+        },
+        {
+          "Id": 2,
+          "FindingTemplate": "We noticed that update KB 3114025 is not installed. During I/O-intensive workload, handles to the same paths under the SMB file share are opened and closed repeatedly, instead of the same file handles being reused.",
+          "RecommendationTemplate": "Install update KB 3114025 to mitigate the issue.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "Slow performance when you access Azure files storage from Windows 8.1 or Server 2012 R2",
+              "Link": "https://support.microsoft.com/en-us/kb/3114025"
+            }
+          ]
+        },
+        {
+          "Id": 3,
+          "FindingTemplate": "We noticed that update KB 3000850 is not installed. It has performance and reliability improvements in clustered VM mission-critical environments.",
+          "RecommendationTemplate": "Install update KB 3000850 to improve the performance and reliability in clustered VMs.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "KB3000850",
+              "Link": "https://support.microsoft.com/en-us/kb/3000850"
+            }
+          ]
+        },
+        {
+          "Id": 4,
+          "FindingTemplate": "Some speculation control settings are enabled.",
+          "RecommendationTemplate": "Depending on the workload, there may be a noticeable performance impact. Assess the performance impact for your environment and make necessary adjustments. Review reference links for more details.",
+          "Level": "Low",
+          "ReferenceLinks": [
+            {
+              "Title": "Windows Server guidance to protect against speculative execution side-channel vulnerabilities",
+              "Link": "https://support.microsoft.com/en-us/help/4072698/windows-server-guidance-to-protect-against-the-speculative-execution"
+            },
+            {
+              "Title": "Summary of Intel microcode updates",
+              "Link": "https://support.microsoft.com/en-us/help/4093836/summary-of-intel-microcode-updates"
+            },
+            {
+              "Title": "Understanding speculation control settings fields",
+              "Link": "https://support.microsoft.com/en-us/help/4074629"
+            },
+            {
+              "Title": "Windows Server guidance to protect against L1 terminal fault",
+              "Link": "https://support.microsoft.com/en-us/help/4457951/windows-server-guidance-to-protect-against-l1-terminal-fault"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$type": "Microsoft.Azure.Performance.Diagnostics.Contracts.DiskConfigurationRuleConfiguration, Microsoft.Azure.Performance.Diagnostics",
+      "Name": "DiskConfigurationRule",
+      "FriendlyName": "Disk configuration analysis",
+      "Enabled": true,
+      "Category": "Storage",
+      "MinVolumeFreeSpacePercentage": 5,
+      "FindingTemplates": [
+        {
+          "Id": 0,
+          "FindingTemplate": "The allocation unit size of volumes can be optimized.",
+          "RecommendationTemplate": "For generic scenarios, it is preferable to have allocation unit size of {RecommendedBlockSizeKB}KB. This reduces the likelihood of file system fragmentation.",
+          "Level": "Low",
+          "ReferenceLinks": [
+            {
+              "Title": "Recommended Storage Configuration for Azure VMs",
+              "Link": "https://technet.microsoft.com/en-us/library/hh831739.aspx#BKMK_AZURE"
+            }
+          ]
+        },
+        {
+          "Id": 1,
+          "FindingTemplate": "Volumes have an unexpected Dynamic Disk RAID type.",
+          "RecommendationTemplate": "Volumes should be configured as RAID type '{RecommendedRAIDType}'. Spanned disks do not improve performance.",
+          "Level": "High",
+          "ReferenceLinks": [
+            {
+              "Title": "How to Create Striped Volumes",
+              "Link": "https://technet.microsoft.com/en-us/library/cc732422(v=ws.11).aspx"
+            }
+          ]
+        },
+        {
+          "Id": 2,
+          "FindingTemplate": "Volumes have an unexpected RAID type.",
+          "RecommendationTemplate": "Volumes should be configured as RAID type '{RecommendedRAIDType}'. Redundancy is already implemented on Azure Storage.",
+          "Level": "High",
+          "ReferenceLinks": [
+            {
+              "Title": "How to Create Striped Volumes",
+              "Link": "https://technet.microsoft.com/en-us/library/cc732422(v=ws.11).aspx"
+            }
+          ]
+        },
+        {
+          "Id": 3,
+          "FindingTemplate": "Automatic clustering of storage sub systems (for newly added storage) can be optimized.",
+          "RecommendationTemplate": "'AutomaticClusteringEnabled' setting should be set to '{RecommendedAutomaticClusteringEnabled}'. Azure Storage cannot be clustered natively on Azure VMs. Updating this value will only affect newly added storage. To change this value for existing disks, you need to disable automatic clustering of newly added storage or recreate the Storage Pool.",
+          "Level": "High",
+          "ReferenceLinks": [
+            {
+              "Title": "How to Disable Automatic Clustering of Storage",
+              "Link": "https://blogs.technet.microsoft.com/keithmayer/2014/12/22/extending-sql-server-2014-alwayson-resource-groups-with-storage-spaces-on-microsoft-azure/"
+            }
+          ]
+        },
+        {
+          "Id": 4,
+          "FindingTemplate": "Pools have more than one virtual disk.",
+          "RecommendationTemplate": "Azure VMs should have a single virtual disk per pool for optimal performance.",
+          "Level": "High",
+          "ReferenceLinks": [
+            {
+              "Title": "Recommended Storage Configuration for Azure VMs",
+              "Link": "https://technet.microsoft.com/en-us/library/hh831739.aspx#BKMK_AZURE"
+            }
+          ]
+        },
+        {
+          "Id": 5,
+          "FindingTemplate": "The number of columns defined for virtual disks does not match the count of physical disks in their pools.",
+          "RecommendationTemplate": "For optimal performance, property NumberOfColumn should match the number of disks in the pool. Recreate the virtual disk by using the PowerShell cmdlet New-VirtualDisk with the option NumberOfColumns.",
+          "Level": "High",
+          "ReferenceLinks": [
+            {
+              "Title": "Recommended Storage Configuration for Azure VMs",
+              "Link": "https://technet.microsoft.com/en-us/library/hh831739.aspx#BKMK_AZURE"
+            }
+          ]
+        },
+        {
+          "Id": 6,
+          "FindingTemplate": "NumberOfColumn property of virtual disks can be optimized.",
+          "RecommendationTemplate": "Storage Spaces Virtual Disks configured for Striping need at least two disks to improve performance.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "Recommended Storage Configuration for Azure VMs",
+              "Link": "https://technet.microsoft.com/en-us/library/hh831739.aspx#BKMK_AZURE"
+            }
+          ]
+        },
+        {
+          "Id": 7,
+          "FindingTemplate": "Virtual disks have an unexpected interleave value.",
+          "RecommendationTemplate": "Expected interleave values for virtual disks are: {RecommendedOlptIoLoadInterleave} (for OLTP IO load) and {RecommendedDataWarehouseIoLoadInterleave} (for DataWarehouse IO Load).",
+          "Level": "High",
+          "ReferenceLinks": [
+            {
+              "Title": "Configuring Azure Virtual Machines for Optimal Storage Performance",
+              "Link": "https://blogs.msdn.microsoft.com/mast/2014/10/14/configuring-azure-virtual-machines-for-optimal-storage-performance/"
+            }
+          ]
+        },
+        {
+          "Id": 8,
+          "FindingTemplate": "Virtual disks have an incorrect ResiliencySettingName value for optimal performance.",
+          "RecommendationTemplate": "The expected ResiliencySettingName value is: {RecommendedResiliencySettingName}. Redundancy is already implemented in Azure Storage.",
+          "Level": "High",
+          "ReferenceLinks": [
+            {
+              "Title": "Recommended Storage Configuration for Azure VMs",
+              "Link": "https://technet.microsoft.com/en-us/library/hh831739.aspx#BKMK_AZURE"
+            }
+          ]
+        },
+        {
+          "Id": 9,
+          "FindingTemplate": "System event ID 157 was found. This indicates that the disk was surprisingly removed (probably due to long disk IO latency).",
+          "RecommendationTemplate": "Increase the value of the registry key to tolerate long disk IO latency. The value should be smaller than 120 for an Azure VM.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "Event ID 157 (Disk has been surprise removed.)",
+              "Link": "https://blogs.msdn.microsoft.com/ntdebugging/2013/12/27/event-id-157-disk-has-been-surprise-removed/"
+            }
+          ]
+        },
+        {
+          "Id": 10,
+          "FindingTemplate": "The IsManualAttach property of virtual disks can be optimized.",
+          "RecommendationTemplate": "Virtual disks will not automatically be attached at server restart. To prevent this behavior, use the following PowerShell command to set IsManualAttach to {RecommendedIsManualAttach}: Set-VirtualDisk -FriendlyName '{VirtualDiskFriendlyName}' -IsManualAttach $False",
+          "Level": "High",
+          "ReferenceLinks": [
+            {
+              "Title": "Using Storage Spaces on an Azure VM cluster for SQL Server Storage",
+              "Link": "https://blogs.msdn.microsoft.com/dfurman/2014/04/27/using-storage-spaces-on-an-azure-vm-cluster-for-sql-server-storage/"
+            }
+          ]
+        },
+        {
+          "Id": 11,
+          "FindingTemplate": "Physical disks have multiple volumes/partitions.",
+          "RecommendationTemplate": "Consider configuring only one volume on each physical disk.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "Recommended Storage Configuration for Azure VMs",
+              "Link": "https://technet.microsoft.com/en-us/library/hh831739.aspx#BKMK_AZURE"
+            }
+          ]
+        },
+        {
+          "Id": 12,
+          "FindingTemplate": "The allocation unit size of volumes that have SQL files can be optimized.",
+          "RecommendationTemplate": "Because SQL Server is running on those volumes, it is preferable to have allocation unit size of {RecommendedBlockSizeKB}KB.",
+          "Level": "High",
+          "ReferenceLinks": [
+            {
+              "Title": "SQL Server Best Practices",
+              "Link": "https://technet.microsoft.com/en-us/library/cc966412.aspx#EEAA"
+            }
+          ]
+        },
+        {
+          "Id": 13,
+          "FindingTemplate": "VMs that are running Windows Server 2012 R2 may experience poor performance if the VM storage stack is in emulated mode. Additionally, you may experience a severe decrease in local resource VHD (temp disk) I/O performance.",
+          "RecommendationTemplate": "Follow the instructions from the reference link to install the storflt driver.",
+          "Level": "High",
+          "ReferenceLinks": [
+            {
+              "Title": "Poor performance for VMs that run with an emulated mode storage stack on Windows Server 2012 R2",
+              "Link": "https://support.microsoft.com/en-us/help/4056345/poor-performance-for-vms-that-run-with-an-emulated-mode-storage-stack"
+            },
+            {
+              "Title": "Hyper-V integration components update for Windows virtual machines",
+              "Link": "https://support.microsoft.com/en-us/help/4072650/hyper-v-integration-components-update-for-windows-virtual-machines"
+            }
+          ]
+        },
+        {
+          "Id": 14,
+          "FindingTemplate": "One or more volume(s) are running out of disk space. This could cause a negative impact on applications running on this VM.",
+          "RecommendationTemplate": "It is recommended to have free space greater than {MinVolumeFreeSpacePercentage}% on a volume. You can free up disk space by deleting old or unnecessary files or by extending the size of the volume.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "Resizing Azure VM OS or Data Disk",
+              "Link": "https://blogs.msdn.microsoft.com/madan/2015/11/02/resizing-azure-vm-os-or-data-disk/"
+            }
+          ]
+        },
+        {
+          "Id": 15,
+          "FindingTemplate": "TRIM is not enabled on this VM.",
+          "RecommendationTemplate": "If you use unmanaged standard disks (HDD), you should enable TRIM. TRIM discards unused blocks on the disk so you are only billed for storage that you are actually using. This can save on costs if you create large files and then delete them.",
+          "Level": "Low",
+          "ReferenceLinks": [
+            {
+              "Title": "Use TRIM with unmanaged standard disks",
+              "Link": "https://docs.microsoft.com/en-us/azure/virtual-machines/windows/about-disks-and-vhds#one-last-recommendation-use-trim-with-unmanaged-standard-disks"
+            }
+          ]
+        },
+        {
+          "Id": 16,
+          "FindingTemplate": "Multiple Anti-Virus programs are installed on this VM. Running more than one Anti-Virus program at the same time would cause high resource consumption, contention, and other potential issues due to the duplication of efforts and might impact overall system performance.",
+          "RecommendationTemplate": "Consider having only one Anti-Virus software installed on the VM.",
+          "Level": "High",
+          "ReferenceLinks": [
+            {
+              "Title": "Anti-Virus Filter Drivers",
+              "Link": "https://docs.microsoft.com/en-us/windows-hardware/drivers/ifs/allocated-altitudes#span-id320000-329998fsfilteranti-virusspanspan-id320000-329998fsfilteranti-virusspanspan-id320000-329998fsfilteranti-virusspan320000---329998-fsfilter-anti-virus"
+            }
+          ]
+        },
+        {
+          "Id": 17,
+          "FindingTemplate": "The storage pool has physical disks with different performance configurations. The slowest disk would be the performance bottleneck and such configuration can have a negative impact on the performance of the entire storage pool.",
+          "RecommendationTemplate": "Review the physical disks in the storage pool and consider reconfiguring the storage pool to include disks with similar performance characteristics.",
+          "Level": "High",
+          "ReferenceLinks": [
+            {
+              "Title": "Recommended Storage Configuration for Azure VMs",
+              "Link": "https://technet.microsoft.com/en-us/library/hh831739.aspx#BKMK_AZURE"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$type": "Microsoft.Azure.Performance.Diagnostics.Contracts.RuleConfiguration, Microsoft.Azure.Performance.Diagnostics",
+      "Name": "SqlSettingsRule",
+      "FriendlyName": "SQL settings analysis",
+      "Enabled": true,
+      "Category": "SQL",
+      "FindingTemplates": [
+        {
+          "Id": 0,
+          "FindingTemplate": "Databases are located on a physical disk that contains a mixture of SQL data and log files. Placing both SQL data and log files on the same disk can cause IO contention, resulting in poor performance.",
+          "RecommendationTemplate": "Configure SQL data and log files to be on separate disks.",
+          "Level": "High",
+          "ReferenceLinks": [
+            {
+              "Title": "Performance best practices for SQL Server in Azure Virtual Machines",
+              "Link": "https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sql/virtual-machines-windows-sql-performance"
+            },
+            {
+              "Title": "How to move user database files",
+              "Link": "https://msdn.microsoft.com/en-us/library/ms345483.aspx"
+            },
+            {
+              "Title": "How to move system database files",
+              "Link": "https://msdn.microsoft.com/en-us/library/ms345408.aspx"
+            }
+          ]
+        },
+        {
+          "Id": 1,
+          "FindingTemplate": "Databases have files located on an OS volume.",
+          "RecommendationTemplate": "Running non-OS data on an OS drive can negatively impact overall VM performance. Move SQL data and log files to non-OS disks.",
+          "Level": "High",
+          "ReferenceLinks": [
+            {
+              "Title": "Performance best practices for SQL Server in Azure Virtual Machines",
+              "Link": "https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sql/virtual-machines-windows-sql-performance"
+            },
+            {
+              "Title": "How to move user database files",
+              "Link": "https://msdn.microsoft.com/en-us/library/ms345483.aspx"
+            },
+            {
+              "Title": "How to move system database files",
+              "Link": "https://msdn.microsoft.com/en-us/library/ms345408.aspx"
+            }
+          ]
+        },
+        {
+          "Id": 2,
+          "FindingTemplate": "SQL Server instance(s) are configured to use unlimited maximum server memory.",
+          "RecommendationTemplate": "We recommended that you limit the value of maximum server memory (in MB) to keep enough memory free for use.",
+          "Level": "High",
+          "ReferenceLinks": [
+            {
+              "Title": "Recommended SQL Server Memory Settings",
+              "Link": "https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sql/virtual-machines-windows-sql-performance"
+            }
+          ]
+        },
+        {
+          "Id": 3,
+          "FindingTemplate": "SQL Server Instance(s) are running with identical min and max server memory.",
+          "RecommendationTemplate": "Use dynamic memory allocation.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "Optimizing Server Performance Using Memory Configuration Options",
+              "Link": "https://technet.microsoft.com/en-us/library/ms177455(v=sql.105).aspx"
+            }
+          ]
+        },
+        {
+          "Id": 4,
+          "FindingTemplate": "Available memory to system (total memory minus max server memory used by all SQL Server instances) is too small.",
+          "RecommendationTemplate": "We recommended that you leave at least {MinUnusedMemoryMB}MB of free memory for the system.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "Optimizing Server Performance Using Memory Configuration Options",
+              "Link": "https://technet.microsoft.com/en-us/library/ms177455(v=sql.105).aspx"
+            }
+          ]
+        },
+        {
+          "Id": 5,
+          "FindingTemplate": "The max degree of parallelism of SQL Server instances is greater than the number of available CPU cores.",
+          "RecommendationTemplate": "Because the machine that is hosting the SQL Server instance has fewer than {MaximumLogicalProcessors} logical processors, the max degree of parallelism setting should not be greater than the number of available CPU cores: {ProcessorCount}.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "Recommendations and Guidelines for Max Degree of Parallelism Configuration Option in SQL Server",
+              "Link": "https://support.microsoft.com/en-us/help/2806535/RecommendationTemplates-and-guidelines-for-the-max-degree-of-parallelism-configuration-option-in-sql-server"
+            }
+          ]
+        },
+        {
+          "Id": 6,
+          "FindingTemplate": "The max degree of parallelism of SQL Server instances is greater than the recommended value.",
+          "RecommendationTemplate": "Because the machine that is hosting the SQL Server instance has exactly {MaximumLogicalProcessors} logical processors (or more), the max degree of parallelism setting should not be greater than {MaximumLogicalProcessors}.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "Recommendations and Guidelines for Max Degree of Parallelism Configuration Option in SQL Server",
+              "Link": "https://support.microsoft.com/en-us/help/2806535/RecommendationTemplates-and-guidelines-for-the-max-degree-of-parallelism-configuration-option-in-sql-server"
+            }
+          ]
+        },
+        {
+          "Id": 7,
+          "FindingTemplate": "The IO latency on the SQL Server instance has exceeded the threshold, which indicates that the disk I/O subsystem is not optimally keeping up with I/O demand.",
+          "RecommendationTemplate": "Review the database files that are listed in the affected resources table, and monitor the virtual file IO stats for these files over a longer period of time. If you notice more instances of IO latency exceeding the threshold, consider moving each database file to a dedicated disk volume. If you are using standard storage, consider upgrading to premium storage. If already using premium storage, consider upgrading to the next level.",
+          "Level": "High",
+          "ReferenceLinks": [
+            {
+              "Title": "SQL Server Virtual File Statistics",
+              "Link": "https://docs.microsoft.com/en-us/sql/relational-databases/system-dynamic-management-views/sys-dm-io-virtual-file-stats-transact-sql"
+            }
+          ]
+        },
+        {
+          "Id": 8,
+          "FindingTemplate": "The current size of this VM is not ideal for the SQL Server edition installed.",
+          "RecommendationTemplate": "If your application is performance sensitive, consider upgrading the VM size. For SQL Server Enterprise Edition, use DS3 or higher. For SQL Server Standard and Web Editions, use DS2 or higher.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "SQL Server VM Size Guidance",
+              "Link": "https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sql/virtual-machines-windows-sql-performance#vm-size-guidance"
+            }
+          ]
+        },
+        {
+          "Id": 9,
+          "FindingTemplate": "Instant file initialization is not enabled on one or more SQL Server instances on this VM.",
+          "RecommendationTemplate": "Consider enabling instant file initialization to reduce the time that is required for initial file allocation.",
+          "Level": "Low",
+          "ReferenceLinks": [
+            {
+              "Title": "SQL Server I/O Guidance",
+              "Link": "https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sql/virtual-machines-windows-sql-performance#io-guidance"
+            },
+            {
+              "Title": "Database File Initialization",
+              "Link": "https://docs.microsoft.com/en-us/sql/relational-databases/databases/database-instant-file-initialization"
+            }
+          ]
+        },
+        {
+          "Id": 10,
+          "FindingTemplate": "AutoShrink is enabled on SQL Server databases.",
+          "RecommendationTemplate": "It is recommended to disable autoshrink on the database to avoid unnecessary overhead that can negatively affect performance.",
+          "Level": "Low",
+          "ReferenceLinks": [
+            {
+              "Title": "SQL Server I/O Guidance",
+              "Link": "https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sql/virtual-machines-windows-sql-performance#io-guidance"
+            },
+            {
+              "Title": "Recommendations and guidelines for setting the AUTO_SHRINK database option in SQL Server",
+              "Link": "https://support.microsoft.com/en-us/help/2160663/recommendations-and-guidelines-for-setting-the-auto-shrink-database-op"
+            }
+          ]
+        },
+        {
+          "Id": 11,
+          "FindingTemplate": "AutoClose is enabled on SQL Server databases.",
+          "RecommendationTemplate": "It is recommended to disable autoclose on the database to avoid unnecessary overhead that can negatively affect performance.",
+          "Level": "Low",
+          "ReferenceLinks": [
+            {
+              "Title": "Recommendations and guidelines for setting the AUTO_CLOSE database option in SQL Server",
+              "Link": "https://support.microsoft.com/en-us/help/2160685/recommendations-and-guidelines-for-setting-the-auto-close-database-opt"
+            }
+          ]
+        },
+        {
+          "Id": 12,
+          "FindingTemplate": "SQL Server instances have error log files located on non-data volumes.",
+          "RecommendationTemplate": "Move SQL Server error log file directories to data volumes.",
+          "Level": "Low",
+          "ReferenceLinks": [
+            {
+              "Title": "SQL Server I/O Guidance",
+              "Link": "https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sql/virtual-machines-windows-sql-performance#io-guidance"
+            }
+          ]
+        },
+        {
+          "Id": 13,
+          "FindingTemplate": "Some SQL Server performance fixes are not installed.",
+          "RecommendationTemplate": "Configure trace flags to enable the performance optimizations.",
+          "Level": "Low",
+          "ReferenceLinks": [
+            {
+              "Title": "SQL Server query optimizer hotfix trace flag 4199 servicing model",
+              "Link": "https://support.microsoft.com/en-us/help/974006/sql-server-query-optimizer-hotfix-trace-flag-4199-servicing-model"
+            },
+            {
+              "Title": "Concurrency enhancements for the tempdb database",
+              "Link": "https://support.microsoft.com/en-us/help/328551/concurrency-enhancements-for-the-tempdb-database"
+            },
+            {
+              "Title": "Recommendations to reduce allocation contention in SQL Server tempdb database",
+              "Link": "https://support.microsoft.com/en-us/help/2154845/recommendations-to-reduce-allocation-contention-in-sql-server-tempdb-d"
+            },
+            {
+              "Title": "SQL Server Trace Flags",
+              "Link": "https://docs.microsoft.com/en-us/sql/t-sql/database-console-commands/dbcc-traceon-trace-flags-transact-sql"
+            }
+          ]
+        },
+        {
+          "Id": 17,
+          "FindingTemplate": "Databases have files located on non Premium Storage. Standard and Standard SSD Storage have varying latencies and bandwidth and are only recommended for dev/test workloads.",
+          "RecommendationTemplate": "Use Azure Premium Storage for production SQL Server workloads and files.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "SQL Server Storage Guidance",
+              "Link": "https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sql/virtual-machines-windows-sql-performance#storage-guidance"
+            }
+          ]
+        },
+        {
+          "Id": 18,
+          "FindingTemplate": "Databases have log files located on the data disks with host caching enabled. Since the log files usually have heavy write workloads, this configuration can result in performance degradation.",
+          "RecommendationTemplate": "For better performance, consider moving the log files to data disks without host caching enabled or disable the host caching for those disks containing the log files.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "SQL Server Storage Guidance",
+              "Link": "https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sql/virtual-machines-windows-sql-performance#data-disks"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$type": "Microsoft.Azure.Performance.Diagnostics.Contracts.SqlAnalyticRuleConfiguration, Microsoft.Azure.Performance.Diagnostics",
+      "Name": "SqlAnalyticRule",
+      "FriendlyName": "SQL Server analysis",
+      "Enabled": true,
+      "Category": "SQL",
+      "AllProcessorsCpuPercentageToAlert": 80,
+      "SqlProcessesCpuPercentageToAlert": 80,
+      "AvailablePhysicalMemoryMBToAlert": 256,
+      "SqlIoLatencyToAlertMS": 50,
+      "SqlBinaries": [
+        "bcp.exe",
+        "sqlcmd.exe",
+        "sqlservr.exe",
+        "sqldumper.exe",
+        "sqllocaldb.exe",
+        "dtexec.exe",
+        "dtshost.exe",
+        "dtswizard.exe",
+        "dtutil.exe",
+        "sqlservr.exe",
+        "sqldumper.exe",
+        "sqlsqm.exe",
+        "sqlwtsn.exe",
+        "osql.exe",
+        "sqldiag.exe",
+        "sqllocaldb.exe",
+        "sqllogship.exe",
+        "sqlwriter.exe",
+        "bcp.exe",
+        "sqlcmd.exe",
+        "backuptourl.exe",
+        "databasemail.exe",
+        "dcexec.exe",
+        "sqlagent.exe",
+        "sqlceip.exe",
+        "sqliosim.exe",
+        "sqlservr.exe",
+        "stretchcodegen.exe",
+        "xpadsi.exe"
+      ],
+      "FindingTemplates": [
+        {
+          "Id": 14,
+          "FindingTemplate": "The page life expectancy of SQL Server has dropped below the threshold during 80% of monitoring period at least. It indicates there was potential memory pressure.",
+          "RecommendationTemplate": "Review other counters and the applications consuming the majority of memory.",
+          "Level": "Low",
+          "ReferenceLinks": [
+            {
+              "Title": "SQL Server Buffer Manager Object",
+              "Link": "https://docs.microsoft.com/en-us/sql/relational-databases/performance-monitor/sql-server-buffer-manager-object"
+            }
+          ]
+        },
+        {
+          "Id": 15,
+          "FindingTemplate": "High CPU-usage periods were detected for SQL Server-related processes.",
+          "RecommendationTemplate": "Review the running server processes in SQL Server, examine the workload, and optimize the most processor-intensive queries. If you cannot make any changes to the current SQL Server or databases, consider adding more processors or increasing the VM size.",
+          "Level": "Low",
+          "ReferenceLinks": null
+        },
+        {
+          "Id": 16,
+          "FindingTemplate": "The available memory on the server has dropped below the threshold, which indicates high memory pressure.",
+          "RecommendationTemplate": "Review the application consuming the majority of memory. If this is expected behavior for it, increase the VM size.",
+          "Level": "Low",
+          "ReferenceLinks": null
+        }
+      ]
+    },
+    {
+      "$type": "Microsoft.Azure.Performance.Diagnostics.Contracts.RuleConfiguration, Microsoft.Azure.Performance.Diagnostics",
+      "Name": "NetworkConfigurationRule",
+      "FriendlyName": "Network configuration analysis",
+      "Enabled": true,
+      "Category": "Network",
+      "FindingTemplates": [
+        {
+          "Id": 0,
+          "FindingTemplate": "Network throughput optimization not enabled on network adapters. A VM using Receive Side Scaling (RSS) can reach higher maximum throughput than a VM without RSS.",
+          "RecommendationTemplate": "Run the following PowerShell command to enable RSS: Get-NetAdapter | % {Enable-NetAdapterRss -Name $_.Name}",
+          "Level": "High",
+          "ReferenceLinks": [
+            {
+              "Title": "Optimize Network Throughput for Azure Virtual Machines",
+              "Link": "https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-optimize-network-bandwidth"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$type": "Microsoft.Azure.Performance.Diagnostics.Contracts.RuleConfiguration, Microsoft.Azure.Performance.Diagnostics",
+      "Name": "ClusterConfigurationRule",
+      "FriendlyName": "Server cluster configuration analysis",
+      "Enabled": true,
+      "Category": "Windows",
+      "FindingTemplates": [
+        {
+          "Id": 0,
+          "FindingTemplate": "The current setting for CrossSubnetThreshold is not optimal.",
+          "RecommendationTemplate": "Change the default value of CrossSubnetThreshold to '{RecommendedCrossSubnetThreshold}'.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "Fine Tuning Failover Cluster Network Thresholds",
+              "Link": "https://support.microsoft.com/en-us/kb/3153887"
+            }
+          ]
+        },
+        {
+          "Id": 1,
+          "FindingTemplate": "The current setting for SameSubnetThreshold is not optimal.",
+          "RecommendationTemplate": "Change the default value of SameSubnetThreshold to '{RecommendedSameSubnetThreshold}'.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "Fine Tuning Failover Cluster Network Thresholds",
+              "Link": "https://support.microsoft.com/en-us/kb/3153887"
+            }
+          ]
+        },
+        {
+          "Id": 2,
+          "FindingTemplate": "The current setting for RouteHistoryLength is not optimal.",
+          "RecommendationTemplate": "Change the default value of RouteHistoryLength to '{RecommendedRouteHistoryLength}'.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "Fine Tuning Failover Cluster Network Thresholds",
+              "Link": "https://support.microsoft.com/en-us/kb/3153887"
+            }
+          ]
+        },
+        {
+          "Id": 3,
+          "FindingTemplate": "The current setting for CrossSiteThreshold is not optimal.",
+          "RecommendationTemplate": "Change the default value of CrossSiteThreshold to '{RecommendedCrossSiteThreshold}'.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "Clustering and High-Availability",
+              "Link": "https://blogs.msdn.microsoft.com/clustering/2012/11/21/tuning-failover-cluster-network-thresholds/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$type": "Microsoft.Azure.Performance.Diagnostics.Contracts.RuleConfiguration, Microsoft.Azure.Performance.Diagnostics",
+      "Name": "SystemConfigurationRule",
+      "FriendlyName": "System configuration analysis",
+      "Enabled": true,
+      "Category": "Windows",
+      "FindingTemplates": [
+        {
+          "Id": 0,
+          "FindingTemplate": "Power plan is not set to High Performance.",
+          "RecommendationTemplate": "It is recommended to set power plan to High Performance on all VMs and any server that requires low latency and the highest performance level.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "Configure Power Plans",
+              "Link": "https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-7/dd744398(v=ws.10)"
+            }
+          ]
+        },
+        {
+          "Id": 1,
+          "FindingTemplate": "GPU driver version is older than the recommended.",
+          "RecommendationTemplate": "Upgrade the GPU driver to the latest version for maximum GPU performance.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "NC, NCv2, NCv3 and ND-series - NVIDIA Tesla (CUDA) drivers",
+              "Link": "https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes-gpu#nc-ncv2-ncv3-and-nd-series---nvidia-tesla-cuda-drivers"
+            }
+          ]
+        },
+        {
+          "Id": 2,
+          "FindingTemplate": "The GPU device on this VM is not using the 'TCC' driver model. This may result in reduced performance on certain compute-intensive, network-intensive, AI and Deep learning workloads.",
+          "RecommendationTemplate": "NC, NCv2, NCv3, and ND VM sizes are optimized for compute-intensive and network-intensive applications and algorithms, including CUDA- and OpenCL-based applications and simulations, AI, and Deep Learning. Configuring this type of VMs to use TCC driver model is recommended for optimal performance if you are using those types of workloads. Use the NVIDIA System Management Interface(nvidia-smi) to set the GPU device driver model.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "NVIDIA System Management Interface",
+              "Link": "https://developer.nvidia.com/nvidia-system-management-interface"
+            }
+          ]
+        },
+        {
+          "Id": 3,
+          "FindingTemplate": "Discrepancies were found between the actual vs available processor count, physical memory on this VM. Configuring the VM to use less number of processors, less amount of physical memory than available could result in reduced performance.",
+          "RecommendationTemplate": "If the discrepancies between the actual vs available processor count or physical memory are not expected, review the output of BCDEdit on the VM. Follow the instructions from the reference links to set the appropriate values.",
+          "Level": "High",
+          "ReferenceLinks": [
+            {
+              "Title": "How to update boot options in BCDEdit",
+              "Link": "https://docs.microsoft.com/en-us/windows-hardware/drivers/devtest/bcdedit--set"
+            },
+            {
+              "Title": "Boot Parameters to Manipulate Memory",
+              "Link": "https://docs.microsoft.com/en-us/windows-hardware/drivers/devtest/boot-parameters-to-manipulate-memory"
+            }
+          ]
+        },
+        {
+          "Id": 4,
+          "FindingTemplate": "The system page file is not located on the temporary disk.",
+          "RecommendationTemplate": "Consider moving the system page file to the temporary disk. Storing the page file on the temporary disk will eliminate storage transaction charges associated with the page file and will free up bandwidth for data that must be stored on a persistent disk.",
+          "Level": "High",
+          "ReferenceLinks": [
+            {
+              "Title": "Virtual Machines Best Practices: Single VMs, Temporary Storage and Uploaded Disks",
+              "Link": "https://azure.microsoft.com/en-us/blog/virtual-machines-best-practices-single-vms-temporary-storage-and-uploaded-disks/"
+            },
+            {
+              "Title": "Move pagefile.sys back to the temporary storage drive",
+              "Link": "https://docs.microsoft.com/en-us/azure/virtual-machines/windows/change-drive-letter?toc=%2fazure%2fvirtual-machines%2fwindows%2fclassic%2ftoc.json#move-pagefilesys-back-to-the-temporary-storage-drive"
+            }
+          ]
+        },
+        {
+          "Id": 5,
+          "FindingTemplate": "There is no page file configured on this VM.",
+          "RecommendationTemplate": "Consider enabling the page file on this VM. Page files help improve overall system stability. If the page file was not intentionally disabled, follow the instructions from the reference links to enable it.",
+          "Level": "Low",
+          "ReferenceLinks": [
+            {
+              "Title": "How to determine the appropriate page file size",
+              "Link": "https://support.microsoft.com/en-us/help/2860880/how-to-determine-the-appropriate-page-file-size-for-64-bit-versions-of"
+            },
+            {
+              "Title": "Move pagefile.sys back to the temporary storage drive",
+              "Link": "https://docs.microsoft.com/en-us/azure/virtual-machines/windows/change-drive-letter?toc=%2fazure%2fvirtual-machines%2fwindows%2fclassic%2ftoc.json#move-pagefilesys-back-to-the-temporary-storage-drive"
+            },
+            {
+              "Title": "Virtual Machines Best Practices: Single VMs, Temporary Storage and Uploaded Disks",
+              "Link": "https://azure.microsoft.com/en-us/blog/virtual-machines-best-practices-single-vms-temporary-storage-and-uploaded-disks/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$type": "Microsoft.Azure.Performance.Diagnostics.Contracts.ClrAnalyticRuleConfiguration, Microsoft.Azure.Performance.Diagnostics",
+      "Name": "ClrAnalyticRule",
+      "FriendlyName": "CLR performance analysis",
+      "Enabled": false,
+      "Category": "CLR",
+      "MaxEtwFileSizeMB": 32,
+      "GCSinglePauseThresholdMS": 500,
+      "GCTotalPauseThresholdPercentage": 5,
+      "FindingTemplates": [
+        {
+          "Id": 0,
+          "FindingTemplate": "Long garbage collection pauses were detected on managed processes. These pauses might impact responsiveness of managed processes.",
+          "RecommendationTemplate": "Review the supporting diagnostics data provided to identify the processes involved and follow the instructions from the reference link(s) to troubleshoot long garbage collection pauses further.",
+          "Level": "Medium",
+          "ReferenceLinks": [
+            {
+              "Title": "Garbage Collection Pauses Are Too Long",
+              "Link": "https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/performance#Issue_LongPauses"
+            },
+            {
+              "Title": "Garbage Collector Enhancements for Client and Server Apps",
+              "Link": "https://blogs.msdn.microsoft.com/dotnet/2012/07/20/the-net-framework-4-5-includes-new-garbage-collector-enhancements-for-client-and-server-apps/"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "DataCollectorConfigurations": [
+    {
+      "$type": "Microsoft.Azure.Performance.Diagnostics.Contracts.SystemEventLogFilesCollectorConfiguration, Microsoft.Azure.Performance.Diagnostics",
+      "Name": "SystemEventLogFilesCollector",
+      "Enabled": true,
+      "MaxCountOfFilteredEventLogs": 300,
+      "EventLogsToSave": [
+        "System",
+        "Security",
+        "Windows Azure",
+        "Windows PowerShell",
+        "HardwareEvents"
+      ],
+      "EventLogQueries": [
+        {
+          "LogName": "Application",
+          "Query": "*[System[(Level<=2 and Level>0) and TimeCreated[timediff(@SystemTime) <= 259200000]]]"
+        },
+        {
+          "LogName": "System",
+          "Query": "*[System[((Level<=2 and Level>0) or EventID=129 or EventID=11 or EventID=157 or EventID=1074 or EventID=833 or EventID=12 or EventID=13) and TimeCreated[timediff(@SystemTime) <= 259200000]]]"
+        }
+      ]
+    },
+    {
+      "$type": "Microsoft.Azure.Performance.Diagnostics.Contracts.DataCollectorConfiguration, Microsoft.Azure.Performance.Diagnostics",
+      "Name": "NetStatCollector",
+      "Enabled": true
+    },
+    {
+      "$type": "Microsoft.Azure.Performance.Diagnostics.Contracts.DataCollectorConfiguration, Microsoft.Azure.Performance.Diagnostics",
+      "Name": "StorageReliabilityCountersCollector",
+      "Enabled": true
+    },
+    {
+      "$type": "Microsoft.Azure.Performance.Diagnostics.Contracts.DataCollectorConfiguration, Microsoft.Azure.Performance.Diagnostics",
+      "Name": "NetworkInformationCollector",
+      "Enabled": true
+    },
+    {
+      "$type": "Microsoft.Azure.Performance.Diagnostics.Contracts.DataCollectorConfiguration, Microsoft.Azure.Performance.Diagnostics",
+      "Name": "RunningProcessesCollector",
+      "Enabled": true
+    },
+    {
+      "$type": "Microsoft.Azure.Performance.Diagnostics.Contracts.DataCollectorConfiguration, Microsoft.Azure.Performance.Diagnostics",
+      "Name": "NetworkTracingCollector",
+      "Enabled": false
+    },
+    {
+      "$type": "Microsoft.Azure.Performance.Diagnostics.Contracts.DataCollectorConfiguration, Microsoft.Azure.Performance.Diagnostics",
+      "Name": "TestClusterReportCollector",
+      "Enabled": true
+    },
+    {
+      "$type": "Microsoft.Azure.Performance.Diagnostics.Contracts.DiskSpdRunnerConfiguration, Microsoft.Azure.Performance.Diagnostics",
+      "Name": "DiskSpdRunner",
+      "Enabled": false,
+      "DatFilePath": "_diskSpd_test",
+      "DatFileName": "testfile.dat",
+      "DatFileSize": "1024M",
+      "RunDurationSec": 90,
+      "WarmupDurationSec": 30,
+      "OSDiskRunSession": {
+        "Enabled": true,
+        "Runs": [
+          {
+            "Name": "IOPS",
+            "Iterations": 3,
+            "QueueDepth": 16,
+            "WriteRatio": 100,
+            "BlockSize": "8k"
+          }
+        ]
+      },
+      "DataDiskRunSession": {
+        "Enabled": true,
+        "Runs": [
+          {
+            "Name": "IOPS",
+            "Iterations": 3,
+            "QueueDepth": 64,
+            "WriteRatio": 100,
+            "BlockSize": "8k"
+          },
+          {
+            "Name": "MBPS",
+            "Iterations": 3,
+            "QueueDepth": 64,
+            "WriteRatio": 100,
+            "BlockSize": "2048k"
+          }
+        ]
+      }
+    },
+    {
+      "$type": "Microsoft.Azure.Performance.Diagnostics.Contracts.EtwTraceCollectorConfiguration, Microsoft.Azure.Performance.Diagnostics",
+      "Name": "EtwTraceCollector",
+      "Enabled": false,
+      "MaxEtwFileSizeMB": 512,
+      "TraceProfilesToEnable": [
+        "General"
+      ],
+      "TraceProfiles": [
+        {
+          "Name": "General",
+          "KernelKeywords": [
+            "Process",
+            "Thread",
+            "ImageLoad",
+            "Profile",
+            "ContextSwitch",
+            "Dispatcher",
+            "DeferedProcedureCalls",
+            "Interrupt",
+            "DiskIO",
+            "DiskFileIO",
+            "DiskIOInit",
+            "MemoryHardFaults"
+          ],
+          "KernelKeywordsWithStack": [
+            "Profile",
+            "ContextSwitch",
+            "Dispatcher"
+          ]
+        },
+        {
+          "Name": "Storport",
+          "KernelKeywords": [
+            "Process",
+            "Thread",
+            "ImageLoad"
+          ],
+          "Providers": [
+            {
+              "ProviderName": "Microsoft-Windows-StorPort",
+              "Level": "Verbose",
+              "Keyword": "0xffffffffffffffff"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$type": "Microsoft.Azure.Performance.Diagnostics.Contracts.PerfCounterCollectorConfiguration, Microsoft.Azure.Performance.Diagnostics",
+      "Name": "PerfCounterCollector",
+      "Enabled": false,
+      "PerfCounterFileName": "GeneralCounters",
+      "SampleIntervalSec": 1,
+      "MaxBlgFileSizeMB": 512,
+      "PerfCounterSetsEnabled": [
+        "General"
+      ],
+      "PerfCounterSets": [
+        {
+          "Name": "General",
+          "Counters": [
+            "\\Process(*)\\*",
+            "\\Thread(*)\\*",
+            "\\Processor Information(*)\\*",
+            "\\Memory(*)\\*",
+            "\\Paging File(*)\\*",
+            "\\PhysicalDisk(*)\\*",
+            "\\LogicalDisk(*)\\*",
+            "\\Cache\\Dirty Pages",
+            "\\Cache\\Lazy Write Flushes/sec",
+            "\\Server\\Pool Nonpaged Failures",
+            "\\Server\\Pool Paged Failures",
+            "\\IPv4\\Datagrams Received/sec",
+            "\\IPv4\\Datagrams Sent/sec",
+            "\\IPv6\\Datagrams Received/sec",
+            "\\IPv6\\Datagrams Sent/sec",
+            "\\TCPv4\\Segments Received/sec",
+            "\\TCPv4\\Segments Sent/sec",
+            "\\TCPv4\\Segments Retransmitted/sec",
+            "\\TCPv6\\Segments Received/sec",
+            "\\TCPv6\\Segments Sent/sec",
+            "\\TCPv6\\Segments Retransmitted/sec",
+            "\\Network Interface(*)\\Bytes Received/sec",
+            "\\Network Interface(*)\\Bytes Sent/sec",
+            "\\Network Interface(*)\\Packets Received/sec",
+            "\\Network Interface(*)\\Packets Sent/sec",
+            "\\Network Interface(*)\\Output Queue Length",
+            "\\Network Interface(*)\\Packets Received Discarded",
+            "\\Network Interface(*)\\Packets Received Errors",
+            "\\Network Interface(*)\\Packets Outbound Discarded",
+            "\\Network Interface(*)\\Packets Outbound Errors",
+            "\\Network Adapter(*)\\Bytes Received/sec",
+            "\\Network Adapter(*)\\Bytes Sent/sec",
+            "\\Network Adapter(*)\\Packets Received/sec",
+            "\\Network Adapter(*)\\Packets Sent/sec",
+            "\\Network Adapter(*)\\Output Queue Length",
+            "\\Network Adapter(*)\\Packets Received Discarded",
+            "\\Network Adapter(*)\\Packets Received Errors",
+            "\\Network Adapter(*)\\Packets Outbound Discarded",
+            "\\Network Adapter(*)\\Packets Outbound Errors",
+            "\\WFPv4\\Packets Discarded/sec",
+            "\\WFPv6\\Packets Discarded/sec",
+            "\\UDPv4\\Datagrams Received Errors",
+            "\\UDPv6\\Datagrams Received Errors",
+            "\\TCPv4\\Connection Failures",
+            "\\TCPv4\\Connections Reset",
+            "\\TCPv6\\Connection Failures",
+            "\\TCPv6\\Connections Reset",
+            "\\Network QoS Policy\\Packets dropped",
+            "\\Network QoS Policy\\Packets dropped/sec",
+            "\\Per Processor Network Interface Card Activity\\Low Resource Receive Indications/sec",
+            "\\Per Processor Network Interface Card Activity\\Low Resource Received Packets/sec",
+            "\\Microsoft Winsock BSP\\Dropped Datagrams",
+            "\\Microsoft Winsock BSP\\Dropped Datagrams/sec",
+            "\\Microsoft Winsock BSP\\Rejected Connections",
+            "\\Microsoft Winsock BSP\\Rejected Connections/sec"
+          ]
+        },
+        {
+          "Name": "SqlServer",
+          "Counters": [
+            "\\SQLServer:Buffer Manager\\*",
+            "\\SQLServer:Resource Pool Stats(*)\\*",
+            "\\SQLServer:SQL Statistics\\*",
+            "\\SQLServer:Locks(*)\\*",
+            "\\SQLServer:General Statistics\\*",
+            "\\SQLServer:Access Methods\\*"
+          ]
+        },
+        {
+          "Name": "SMB",
+          "Counters": [
+            "\\SMB Client Shares(*)\\*"
+          ]
+        }
+      ]
+    },
+    {
+      "$type": "Microsoft.Azure.Performance.Diagnostics.Contracts.DataCollectorConfiguration, Microsoft.Azure.Performance.Diagnostics",
+      "Name": "SqlLogFilesCollector",
+      "Enabled": true
+    }
+  ]
+}
